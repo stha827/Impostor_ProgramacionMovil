@@ -45,7 +45,6 @@ class ContenidoState extends State<LoginContenido> {
       padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
               "assets/login/logoBasico.png",
@@ -66,29 +65,36 @@ class ContenidoState extends State<LoginContenido> {
               color: const Color.fromARGB(255, 0, 0, 0),
               child: Column(
                 children: [
+                  SizedBox(height: 30),
                   Text(
                     "Introduce tu correo",
                     style: GoogleFonts.pirataOne(
                       fontSize: 20,
-                      color: const Color.fromARGB(255, 126, 113, 91),
+                      color: const Color.fromARGB(255, 248, 240, 225),
                     ),
                   ),
-                  _crearEmail(),
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+                    child: _crearEmail(),
+                  ),
                   SizedBox(height: 10),
                   Text(
                     "Introduce tu contraseña",
                     style: GoogleFonts.pirataOne(
                       fontSize: 20,
-                      color: const Color.fromARGB(255, 126, 113, 91),
+                      color: const Color.fromARGB(255, 248, 240, 225),
                     ),
                   ),
-                  _crearPassword(),
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(left: 10, right: 10),
+                    child: _crearPassword(),
+                  ),
                   ElevatedButton(
                     onPressed: () {
                       reset();
                     },
                     style: ElevatedButton.styleFrom(
-                      minimumSize: Size(390, 50),
+                      minimumSize: Size(375, 50),
                       shadowColor: const Color.fromARGB(255, 255, 255, 255),
                       elevation: 5,
                       backgroundColor: const Color.fromARGB(255, 241, 230, 211),
@@ -98,13 +104,13 @@ class ContenidoState extends State<LoginContenido> {
                     ),
                     child: Text(
                       "Iniciar Sesión",
-                      style: GoogleFonts.bangers(
+                      style: GoogleFonts.pirataOne(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 0, 0, 0),
                       ),
                     ),
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 40),
                 ],
               ),
             ),
@@ -120,13 +126,52 @@ class ContenidoState extends State<LoginContenido> {
         _correo = valor;
       }),
       keyboardType: TextInputType.emailAddress,
+      style: GoogleFonts.pirataOne(fontSize: 16.0),
+      cursorColor: const Color.fromARGB(255, 135, 111, 85),
       decoration: InputDecoration(
         hintText: 'emailpersonal@correo.es',
-        hintStyle: TextStyle(color: const Color.fromARGB(255, 126, 113, 91)),
+        hintStyle: GoogleFonts.pirataOne(
+          color: Color.fromARGB(255, 63, 57, 46),
+        ),
         labelText: 'Email Personal',
-        labelStyle: TextStyle(color: Color.fromARGB(255, 241, 230, 211)),
-        suffixIcon: const Icon(Icons.email),
+        labelStyle: GoogleFonts.pirataOne(
+          color: Color.fromARGB(255, 68, 68, 68),
+        ),
+        suffixIcon: const Icon(
+          Icons.email,
+          color: Color.fromARGB(255, 135, 111, 85),
+        ),
+        filled: true,
+        fillColor: const Color.fromARGB(255, 255, 255, 255),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
       ),
     );
   }
@@ -139,11 +184,52 @@ class ContenidoState extends State<LoginContenido> {
       obscureText: true,
       obscuringCharacter: '♡',
       maxLength: 20,
+      style: GoogleFonts.pirataOne(fontSize: 16.0),
+      cursorColor: const Color.fromARGB(255, 135, 111, 85),
       decoration: InputDecoration(
-        hintText: 'Contraseña de entrada',
+        hintText: 'usuario123456...',
+        hintStyle: GoogleFonts.pirataOne(
+          color: Color.fromARGB(255, 63, 57, 46),
+        ),
         labelText: 'Contraseña',
-        suffixIcon: const Icon(Icons.password),
+        labelStyle: GoogleFonts.pirataOne(
+          color: Color.fromARGB(255, 68, 68, 68),
+        ),
+        suffixIcon: const Icon(
+          Icons.email,
+          color: Color.fromARGB(255, 135, 111, 85),
+        ),
+        filled: true,
+        fillColor: const Color.fromARGB(255, 255, 255, 255),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          borderSide: const BorderSide(
+            color: Color.fromARGB(255, 135, 111, 85),
+            width: 4,
+          ),
+        ),
       ),
     );
   }
