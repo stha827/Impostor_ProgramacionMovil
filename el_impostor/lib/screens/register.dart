@@ -1,11 +1,12 @@
-import 'package:el_impostor/screens/agregar_jugadores.dart';
-import 'package:el_impostor/screens/register.dart';
+// ignore_for_file: unused_field
+
+import 'package:el_impostor/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 // Pantalla de inicio con el Drawer
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,8 +16,8 @@ class LoginScreen extends StatelessWidget {
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
             colors: [
-              Color.fromARGB(255, 241, 230, 211),
               Color.fromARGB(255, 126, 113, 91),
+              Color.fromARGB(255, 241, 230, 211),
             ],
             stops: [0.3, 0.75],
           ),
@@ -27,8 +28,8 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-class LoginContenido extends StatefulWidget {
-  const LoginContenido({super.key});
+class RegisterContenido extends StatefulWidget {
+  const RegisterContenido({super.key});
   @override
   ContenidoState createState() {
     return ContenidoState();
@@ -37,6 +38,7 @@ class LoginContenido extends StatefulWidget {
 
 //Cuerpo
 class ContenidoState extends State<LoginContenido> {
+  // ignore: prefer_final_fields
   String _nombre = '';
   String _correo = '';
   String _password = '';
@@ -49,22 +51,22 @@ class ContenidoState extends State<LoginContenido> {
         Column(
           children: [
             Image.asset(
-              "assets/login/logoBasico.png",
+              "assets/registro/logoBasico.png",
               // height: MediaQuery.of(context).size.height * 0.2,
               // width: MediaQuery.of(context).size.width * 0.2,
             ),
-            Text("Bienvenida/o", style: GoogleFonts.pirataOne(fontSize: 44)),
+            SizedBox(height: 10),
             Text(
-              "Preparate para jugar",
-              style: GoogleFonts.pirataOne(fontSize: 25),
+              "Empieza tu camino...",
+              style: GoogleFonts.pirataOne(fontSize: 44),
             ),
           ],
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 40),
         Column(
           children: [
             Container(
-              color: const Color.fromARGB(255, 0, 0, 0),
+              color: const Color.fromARGB(255, 255, 255, 255),
               child: Column(
                 children: [
                   SizedBox(height: 30),
@@ -72,7 +74,7 @@ class ContenidoState extends State<LoginContenido> {
                     "Introduce tu correo",
                     style: GoogleFonts.pirataOne(
                       fontSize: 20,
-                      color: const Color.fromARGB(255, 248, 240, 225),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   Padding(
@@ -84,7 +86,7 @@ class ContenidoState extends State<LoginContenido> {
                     "Introduce tu contraseña",
                     style: GoogleFonts.pirataOne(
                       fontSize: 20,
-                      color: const Color.fromARGB(255, 248, 240, 225),
+                      color: const Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   Padding(
@@ -95,39 +97,12 @@ class ContenidoState extends State<LoginContenido> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const Jugadores()),
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(375, 50),
-                      shadowColor: const Color.fromARGB(255, 255, 255, 255),
-                      elevation: 5,
-                      backgroundColor: const Color.fromARGB(255, 241, 230, 211),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
-                      ),
-                    ),
-                    child: Text(
-                      "Iniciar Sesión",
-                      style: GoogleFonts.pirataOne(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => const RegisterScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(375, 50),
-                      shadowColor: const Color.fromARGB(255, 255, 255, 255),
+                      shadowColor: const Color.fromARGB(255, 43, 38, 0),
                       elevation: 5,
                       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
                       shape: RoundedRectangleBorder(
@@ -135,7 +110,7 @@ class ContenidoState extends State<LoginContenido> {
                       ),
                     ),
                     child: Text(
-                      "Resgistrarme",
+                      "Registrarme",
                       style: GoogleFonts.pirataOne(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 241, 230, 211),
@@ -158,7 +133,7 @@ class ContenidoState extends State<LoginContenido> {
         _correo = valor;
       }),
       keyboardType: TextInputType.emailAddress,
-      style: GoogleFonts.pirataOne(fontSize: 16.0),
+      style: GoogleFonts.pirataOne(fontSize: 16.0, color: Colors.white),
       cursorColor: const Color.fromARGB(255, 135, 111, 85),
       decoration: InputDecoration(
         hintText: 'emailpersonal@correo.es',
@@ -167,14 +142,14 @@ class ContenidoState extends State<LoginContenido> {
         ),
         labelText: 'Email Personal',
         labelStyle: GoogleFonts.pirataOne(
-          color: Color.fromARGB(255, 68, 68, 68),
+          color: Color.fromARGB(255, 161, 161, 161),
         ),
         suffixIcon: const Icon(
           Icons.email,
           color: Color.fromARGB(255, 135, 111, 85),
         ),
         filled: true,
-        fillColor: const Color.fromARGB(255, 255, 255, 255),
+        fillColor: const Color.fromARGB(255, 0, 0, 0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -216,7 +191,7 @@ class ContenidoState extends State<LoginContenido> {
       obscureText: true,
       obscuringCharacter: '♡',
       maxLength: 20,
-      style: GoogleFonts.pirataOne(fontSize: 16.0),
+      style: GoogleFonts.pirataOne(fontSize: 16.0, color: Colors.white),
       cursorColor: const Color.fromARGB(255, 135, 111, 85),
       decoration: InputDecoration(
         hintText: 'usuario123456...',
@@ -225,14 +200,14 @@ class ContenidoState extends State<LoginContenido> {
         ),
         labelText: 'Contraseña',
         labelStyle: GoogleFonts.pirataOne(
-          color: Color.fromARGB(255, 68, 68, 68),
+          color: Color.fromARGB(255, 161, 161, 161),
         ),
         suffixIcon: const Icon(
           Icons.email,
           color: Color.fromARGB(255, 135, 111, 85),
         ),
         filled: true,
-        fillColor: const Color.fromARGB(255, 255, 255, 255),
+        fillColor: const Color.fromARGB(255, 0, 0, 0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
