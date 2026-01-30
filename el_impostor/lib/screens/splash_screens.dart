@@ -1,6 +1,7 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:el_impostor/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,7 +16,7 @@ class SplashScreen extends StatelessWidget {
         centered: true,
         nextScreen: const HomeScreen(),
         backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        duration: 1200,
+        duration: 1100,
       ),
     );
   }

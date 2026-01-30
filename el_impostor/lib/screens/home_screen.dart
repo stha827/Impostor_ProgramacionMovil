@@ -8,7 +8,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //Estilo de degradado para el cuerpo
       body: Container(
         color: const Color.fromARGB(255, 31, 31, 31),
         child: LoginScreen(),
@@ -16,15 +15,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-//Cuerpo
-// class Contenido extends StatelessWidget {
-//   const Contenido({super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.transparent,
-//       body: Column(const LoginScreen()),
-//     );
-//   }
-// }

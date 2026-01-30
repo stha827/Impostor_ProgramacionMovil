@@ -22,7 +22,7 @@ class RegisterScreen extends StatelessWidget {
             stops: [0.3, 0.75],
           ),
         ),
-        child: LoginContenido(),
+        child: RegisterContenido(),
       ),
     );
   }
@@ -31,13 +31,13 @@ class RegisterScreen extends StatelessWidget {
 class RegisterContenido extends StatefulWidget {
   const RegisterContenido({super.key});
   @override
-  ContenidoState createState() {
-    return ContenidoState();
+  RegisterState createState() {
+    return RegisterState();
   }
 }
 
 //Cuerpo
-class ContenidoState extends State<LoginContenido> {
+class RegisterState extends State<RegisterContenido> {
   // ignore: prefer_final_fields
   String _nombre = '';
   String _correo = '';
@@ -66,7 +66,7 @@ class ContenidoState extends State<LoginContenido> {
         Column(
           children: [
             Container(
-              color: const Color.fromARGB(255, 255, 255, 255),
+              color: const Color.fromARGB(195, 255, 255, 255),
               child: Column(
                 children: [
                   SizedBox(height: 30),

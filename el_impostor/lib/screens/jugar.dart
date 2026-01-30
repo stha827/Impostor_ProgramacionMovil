@@ -1,6 +1,7 @@
 import 'package:el_impostor/screens/agregar_jugadores.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:el_impostor/screens/globals.dart';
 
 // Pantalla de inicio con el Drawer
 class Jugar extends StatelessWidget {
@@ -30,6 +31,26 @@ class JugarState extends State<JugarContenido> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        SizedBox(
+          height: 600,
+          //Utilizamos GridView para poder hacer un scroll en caso de que haya muchos elementos
+          child: GridView.count(
+            crossAxisCount: 2,
+            children: [
+              for (var i = 0; i < jugadores; i++)
+                Container(
+                  color: const Color.fromARGB(255, 217, 226, 232),
+                  child: Text(
+                    'Jugador número ${i + 1}',
+                    style: GoogleFonts.pirataOne(
+                      fontSize: 20,
+                      color: const Color.fromARGB(255, 168, 153, 181),
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
         ElevatedButton(
           onPressed: () {
             Navigator.push(

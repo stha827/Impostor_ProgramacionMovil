@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:el_impostor/screens/agregar_jugadores.dart';
 import 'package:el_impostor/screens/register.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,7 @@ class LoginContenido extends StatefulWidget {
 
 //Cuerpo
 class ContenidoState extends State<LoginContenido> {
+  // ignore: prefer_final_fields
   String _nombre = '';
   String _correo = '';
   String _password = '';

@@ -1,10 +1,12 @@
 import 'package:el_impostor/screens/jugar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:el_impostor/screens/globals.dart';
 
 // Pantalla de inicio con el Drawer
 class Jugadores extends StatelessWidget {
   const Jugadores({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,22 +26,20 @@ class JugadoresContenido extends StatefulWidget {
   }
 }
 
-int _jugadores = 3;
-
 //Cuerpo
 class JugadoresState extends State<JugadoresContenido> {
   void agregarJugadores() {
     setState(() {
-      _jugadores++;
+      jugadores++;
     });
   }
 
   void eliminarJugadores() {
     setState(() {
-      if (_jugadores > 3) {
-        _jugadores--;
+      if (jugadores > 3) {
+        jugadores--;
       } else {
-        _jugadores == 3;
+        jugadores == 3;
       }
     });
   }
@@ -97,11 +97,11 @@ class JugadoresState extends State<JugadoresContenido> {
           child: GridView.count(
             crossAxisCount: 2,
             children: [
-              for (var i = 0; i < _jugadores; i++)
+              for (var i = 0; i < jugadores; i++)
                 Container(
                   color: const Color.fromARGB(255, 217, 226, 232),
                   child: Text(
-                    'Jugador número $_jugadores',
+                    'Jugador número ${i + 1}',
                     style: GoogleFonts.pirataOne(
                       fontSize: 20,
                       color: const Color.fromARGB(255, 168, 153, 181),
@@ -111,7 +111,7 @@ class JugadoresState extends State<JugadoresContenido> {
             ],
           ),
         ),
-        Text('$_jugadores'),
+        Text('$jugadores'),
         ElevatedButton(
           onPressed: () {
             Navigator.push(
