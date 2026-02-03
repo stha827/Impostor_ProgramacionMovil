@@ -50,13 +50,18 @@ class JugadoresState extends State<JugadoresContenido> {
       children: [
         SizedBox(height: 40),
         Row(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            SizedBox(width: 10),
             ElevatedButton(
               onPressed: () {
                 agregarJugadores();
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(100, 50),
+                minimumSize: Size(
+                  MediaQuery.of(context).size.height * 0.225,
+                  MediaQuery.of(context).size.width * 0.3,
+                ),
                 shadowColor: const Color.fromARGB(255, 255, 255, 255),
                 elevation: 5,
                 backgroundColor: const Color.fromARGB(255, 142, 153, 163),
@@ -70,12 +75,16 @@ class JugadoresState extends State<JugadoresContenido> {
                 ),
               ),
             ),
+            SizedBox(width: 20),
             ElevatedButton(
               onPressed: () {
                 eliminarJugadores();
               },
               style: ElevatedButton.styleFrom(
-                minimumSize: Size(100, 50),
+                minimumSize: Size(
+                  MediaQuery.of(context).size.height * 0.225,
+                  MediaQuery.of(context).size.width * 0.3,
+                ),
                 shadowColor: const Color.fromARGB(255, 255, 255, 255),
                 elevation: 5,
                 backgroundColor: const Color.fromARGB(255, 107, 123, 142),
@@ -92,26 +101,36 @@ class JugadoresState extends State<JugadoresContenido> {
           ],
         ),
         SizedBox(
-          height: 600,
-          //Utilizamos GridView para poder hacer un scroll en caso de que haya muchos elementos
+          height: 550,
           child: GridView.count(
             crossAxisCount: 2,
             children: [
               for (var i = 0; i < jugadores; i++)
-                Container(
-                  color: const Color.fromARGB(255, 217, 226, 232),
-                  child: Text(
-                    'Jugador número ${i + 1}',
-                    style: GoogleFonts.pirataOne(
-                      fontSize: 20,
-                      color: const Color.fromARGB(255, 168, 153, 181),
+                Padding(
+                  padding: EdgeInsetsGeometry.all(10),
+                  child: Container(
+                    color: const Color.fromARGB(255, 217, 226, 232),
+                    child: Center(
+                      child: Text(
+                        'Jugador número ${i + 1}',
+                        style: GoogleFonts.pirataOne(
+                          fontSize: 20,
+                          color: const Color.fromARGB(255, 168, 153, 181),
+                        ),
+                      ),
                     ),
                   ),
                 ),
             ],
           ),
         ),
-        Text('$jugadores'),
+        Text(
+          'Cantidad de jugadores: $jugadores',
+          style: GoogleFonts.pirataOne(
+            fontSize: 17,
+            color: const Color.fromARGB(255, 80, 7, 109),
+          ),
+        ),
         ElevatedButton(
           onPressed: () {
             Navigator.push(
