@@ -44,6 +44,14 @@ class ContenidoState extends State<LoginContenido> {
   String? _errorMessage;
   bool _isLoading = false;
 
+  @override
+  void _login() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => const Jugadores()),
+    );
+  }
+
   // Función para Iniciar Sesión
   Future<void> _loginUser() async {
     if (_correo.isEmpty || _password.isEmpty) {
@@ -167,7 +175,7 @@ class ContenidoState extends State<LoginContenido> {
                           color: Color.fromARGB(255, 241, 230, 211),
                         )
                       : ElevatedButton(
-                          onPressed: _loginUser,
+                          onPressed: _login,
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(375, 50),
                             shadowColor: const Color.fromARGB(

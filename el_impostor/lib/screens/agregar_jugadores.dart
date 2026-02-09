@@ -31,6 +31,7 @@ class JugadoresState extends State<JugadoresContenido> {
   void agregarJugadores() {
     setState(() {
       jugadores++;
+      nombresJugadores.add("");
     });
   }
 
@@ -38,6 +39,7 @@ class JugadoresState extends State<JugadoresContenido> {
     setState(() {
       if (jugadores > 3) {
         jugadores--;
+        nombresJugadores.remove("");
       } else {
         jugadores == 3;
       }
@@ -107,16 +109,24 @@ class JugadoresState extends State<JugadoresContenido> {
             children: [
               for (var i = 0; i < jugadores; i++)
                 Padding(
-                  padding: EdgeInsetsGeometry.all(10),
+                  padding: const EdgeInsets.all(10),
                   child: Container(
                     color: const Color.fromARGB(255, 217, 226, 232),
                     child: Center(
-                      child: Text(
-                        'Jugador número ${i + 1}',
+                      child: TextFormField(
+                        initialValue: "Jugador ${i + 1}",
                         style: GoogleFonts.pirataOne(
                           fontSize: 20,
                           color: const Color.fromARGB(255, 168, 153, 181),
                         ),
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: 'Añade un nombre',
+                          border: InputBorder.none,
+                        ),
+                        onChanged: (nuevoTexto) {
+                          nombresJugadores[i] = nuevoTexto;
+                        },
                       ),
                     ),
                   ),

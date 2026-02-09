@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class FlipCardWidget extends StatefulWidget {
-  final int numeroJugador;
-  const FlipCardWidget({super.key, required this.numeroJugador});
+  final String nombreJugador;
+  const FlipCardWidget({super.key, required this.nombreJugador});
   @override
   State<FlipCardWidget> createState() => _FlipCardWidgetState();
 }
@@ -82,7 +82,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       ),
       child: Center(
         child: Text(
-          'Jugador número ${widget.numeroJugador}',
+          widget.nombreJugador,
           textAlign: TextAlign.center,
           style: GoogleFonts.pirataOne(
             fontSize: 23,

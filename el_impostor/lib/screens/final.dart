@@ -1,33 +1,33 @@
-import 'package:el_impostor/screens/final.dart';
+import 'package:el_impostor/screens/agregar_jugadores.dart';
 import 'package:el_impostor/screens/flipCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:el_impostor/screens/globals.dart';
 
 // Pantalla de inicio con el Drawer
-class Jugar extends StatelessWidget {
-  const Jugar({super.key});
+class Final extends StatelessWidget {
+  const Final({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         color: Color.fromARGB(255, 56, 56, 54),
-        child: JugarContenido(),
+        child: FinalContenido(),
       ),
     );
   }
 }
 
-class JugarContenido extends StatefulWidget {
-  const JugarContenido({super.key});
+class FinalContenido extends StatefulWidget {
+  const FinalContenido({super.key});
   @override
-  JugarState createState() {
-    return JugarState();
+  FinalState createState() {
+    return FinalState();
   }
 }
 
 //Cuerpo
-class JugarState extends State<JugarContenido> {
+class FinalState extends State<FinalContenido> {
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -37,26 +37,21 @@ class JugarState extends State<JugarContenido> {
           child: GridView.count(
             crossAxisCount: 2,
             children: [
-              for (var i = 0; i < nombresJugadores.length; i++)
-                Padding(
-                  padding: EdgeInsetsGeometry.all(7),
-                  child: FlipCardWidget(nombreJugador: nombresJugadores[i]),
+              Padding(
+                padding: EdgeInsetsGeometry.all(10),
+                child: Container(
+                  color: const Color.fromARGB(255, 168, 153, 181),
+                  child: Center(
+                    child: Text(
+                      'El impostor era...',
+                      style: GoogleFonts.pirataOne(
+                        fontSize: 20,
+                        color: const Color.fromARGB(255, 217, 226, 232),
+                      ),
+                    ),
+                  ),
                 ),
-              // Padding(
-              //   padding: EdgeInsetsGeometry.all(10),
-              //   child: Container(
-              //     color: const Color.fromARGB(255, 168, 153, 181),
-              //     child: Center(
-              //       child: Text(
-              //         'Jugador número ${i + 1}',
-              //         style: GoogleFonts.pirataOne(
-              //           fontSize: 20,
-              //           color: const Color.fromARGB(255, 217, 226, 232),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              ),
             ],
           ),
         ),
@@ -65,7 +60,7 @@ class JugarState extends State<JugarContenido> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const Final()),
+              MaterialPageRoute(builder: (_) => const Jugadores()),
             );
             ();
           },
@@ -77,7 +72,7 @@ class JugarState extends State<JugarContenido> {
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
           ),
           child: Text(
-            "Terminar partida",
+            "Volver a jugar",
             style: GoogleFonts.pirataOne(
               fontSize: 20,
               color: const Color.fromARGB(255, 168, 153, 181),
