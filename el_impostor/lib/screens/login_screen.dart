@@ -1,5 +1,5 @@
 // ignore_for_file: unused_field
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:el_impostor/screens/agregar_jugadores.dart';
 import 'package:el_impostor/screens/register.dart';
 import 'package:flutter/material.dart';
@@ -39,11 +39,64 @@ class LoginContenido extends StatefulWidget {
 
 //Cuerpo
 class ContenidoState extends State<LoginContenido> {
-  // ignore: prefer_final_fields
-  String _nombre = '';
   String _correo = '';
   String _password = '';
-  void reset() {}
+  String? _errorMessage;
+  bool _isLoading = false;
+
+  // Función para Iniciar Sesión
+  Future<void> _loginUser() async {
+    if (_correo.isEmpty || _password.isEmpty) {
+      setState(() {
+        _errorMessage = "Por favor, llena todos los campos";
+      });
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      // Intentamos iniciar sesión en Firebase
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: _correo.trim(),
+        password: _password,
+      );
+
+      // Iniciamos sesión en caso de éxito
+      if (!mounted) return;
+      // Bloqueamos el login para que no se pueda volver
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const Jugadores()),
+      );
+    } on FirebaseAuthException catch (e) {
+      // Errores
+      String message = '';
+      if (e.code == 'user-not-found' || e.code == 'invalid-credential') {
+        message = 'Usuario o contraseña incorrectos.';
+      } else if (e.code == 'wrong-password') {
+        message = 'La contraseña es incorrecta.';
+      } else if (e.code == 'invalid-email') {
+        message = 'El correo no tiene un formato válido.';
+      } else {
+        message = 'Error: ${e.message}';
+      }
+
+      setState(() {
+        _errorMessage = message;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Ocurrió un error inesperado.';
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -51,11 +104,7 @@ class ContenidoState extends State<LoginContenido> {
       children: [
         Column(
           children: [
-            Image.asset(
-              "assets/login/logoBasico.png",
-              // height: MediaQuery.of(context).size.height * 0.2,
-              // width: MediaQuery.of(context).size.width * 0.2,
-            ),
+            Image.asset("assets/login/logoBasico.png"),
             Text("Bienvenida/o", style: GoogleFonts.pirataOne(fontSize: 44)),
             Text(
               "Preparate para jugar",
@@ -71,6 +120,7 @@ class ContenidoState extends State<LoginContenido> {
               child: Column(
                 children: [
                   SizedBox(height: 30),
+                  // Email
                   Text(
                     "Introduce tu correo",
                     style: GoogleFonts.pirataOne(
@@ -83,6 +133,7 @@ class ContenidoState extends State<LoginContenido> {
                     child: _crearEmail(),
                   ),
                   SizedBox(height: 10),
+                  // Contraseña
                   Text(
                     "Introduce tu contraseña",
                     style: GoogleFonts.pirataOne(
@@ -94,31 +145,58 @@ class ContenidoState extends State<LoginContenido> {
                     padding: EdgeInsetsGeometry.only(left: 10, right: 10),
                     child: _crearPassword(),
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const Jugadores()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: Size(375, 50),
-                      shadowColor: const Color.fromARGB(255, 255, 255, 255),
-                      elevation: 5,
-                      backgroundColor: const Color.fromARGB(255, 241, 230, 211),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero,
+                  // Mensaje de error
+                  if (_errorMessage != null)
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        _errorMessage!,
+                        style: GoogleFonts.pirataOne(
+                          color: Colors.red,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    child: Text(
-                      "Iniciar Sesión",
-                      style: GoogleFonts.pirataOne(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 0, 0, 0),
-                      ),
-                    ),
-                  ),
+                  SizedBox(height: 10),
+                  //Boton de inicio de sesion
+                  // En caso de que esté cargando nos mostrará el símbolo de la rueda girando
+                  // En caso contrario nos mostrará el botón para que podamos inoiciar sesión
+                  _isLoading
+                      ? const CircularProgressIndicator(
+                          color: Color.fromARGB(255, 241, 230, 211),
+                        )
+                      : ElevatedButton(
+                          onPressed: _loginUser,
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: Size(375, 50),
+                            shadowColor: const Color.fromARGB(
+                              255,
+                              255,
+                              255,
+                              255,
+                            ),
+                            elevation: 5,
+                            backgroundColor: const Color.fromARGB(
+                              255,
+                              241,
+                              230,
+                              211,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            ),
+                          ),
+                          child: Text(
+                            "Iniciar Sesión",
+                            style: GoogleFonts.pirataOne(
+                              fontSize: 20,
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                            ),
+                          ),
+                        ),
                   SizedBox(height: 20),
+                  //Botón de Registro
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -138,7 +216,7 @@ class ContenidoState extends State<LoginContenido> {
                       ),
                     ),
                     child: Text(
-                      "Resgistrarme",
+                      "Registrarme",
                       style: GoogleFonts.pirataOne(
                         fontSize: 20,
                         color: const Color.fromARGB(255, 241, 230, 211),
@@ -193,20 +271,6 @@ class ContenidoState extends State<LoginContenido> {
             width: 4,
           ),
         ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 135, 111, 85),
-            width: 4,
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 135, 111, 85),
-            width: 4,
-          ),
-        ),
       ),
     );
   }
@@ -231,7 +295,7 @@ class ContenidoState extends State<LoginContenido> {
           color: Color.fromARGB(255, 68, 68, 68),
         ),
         suffixIcon: const Icon(
-          Icons.email,
+          Icons.lock, // Cambié el icono a candado aquí para diferenciar
           color: Color.fromARGB(255, 135, 111, 85),
         ),
         filled: true,
@@ -245,20 +309,6 @@ class ContenidoState extends State<LoginContenido> {
           ),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 135, 111, 85),
-            width: 4,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: const BorderSide(
-            color: Color.fromARGB(255, 135, 111, 85),
-            width: 4,
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
           borderSide: const BorderSide(
             color: Color.fromARGB(255, 135, 111, 85),

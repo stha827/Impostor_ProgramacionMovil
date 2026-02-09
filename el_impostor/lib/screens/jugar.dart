@@ -1,4 +1,5 @@
 import 'package:el_impostor/screens/agregar_jugadores.dart';
+import 'package:el_impostor/screens/flipCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:el_impostor/screens/globals.dart';
@@ -38,20 +39,24 @@ class JugarState extends State<JugarContenido> {
             children: [
               for (var i = 0; i < jugadores; i++)
                 Padding(
-                  padding: EdgeInsetsGeometry.all(10),
-                  child: Container(
-                    color: const Color.fromARGB(255, 168, 153, 181),
-                    child: Center(
-                      child: Text(
-                        'Jugador número ${i + 1}',
-                        style: GoogleFonts.pirataOne(
-                          fontSize: 20,
-                          color: const Color.fromARGB(255, 217, 226, 232),
-                        ),
-                      ),
-                    ),
-                  ),
+                  padding: EdgeInsetsGeometry.all(7),
+                  child: FlipCardWidget(numeroJugador: i + 1),
                 ),
+              // Padding(
+              //   padding: EdgeInsetsGeometry.all(10),
+              //   child: Container(
+              //     color: const Color.fromARGB(255, 168, 153, 181),
+              //     child: Center(
+              //       child: Text(
+              //         'Jugador número ${i + 1}',
+              //         style: GoogleFonts.pirataOne(
+              //           fontSize: 20,
+              //           color: const Color.fromARGB(255, 217, 226, 232),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),

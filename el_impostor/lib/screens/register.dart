@@ -1,8 +1,9 @@
 // ignore_for_file: unused_field
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:el_impostor/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 // Pantalla de inicio con el Drawer
 class RegisterScreen extends StatelessWidget {
@@ -42,7 +43,66 @@ class RegisterState extends State<RegisterContenido> {
   String _nombre = '';
   String _correo = '';
   String _password = '';
-  void reset() {}
+  String? _errorMessage;
+
+  // Función para manejar el registro de usuario
+  Future<void> _registerUser() async {
+    setState(() {
+      _errorMessage = null;
+    });
+
+    try {
+      // Creamos el usuario
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _correo.trim(),
+            password: _password,
+          );
+
+      print('Usuario Auth creado: ${userCredential.user?.email}');
+
+      // Obtenemos el ID
+      String uid = userCredential.user!.uid;
+
+      // Creamos un documento
+      await FirebaseFirestore.instance.collection('jugadores').doc(uid).set({
+        'email': _correo.trim(),
+        'nombre': _nombre,
+        'escapadas_exitosas': 0,
+        'escapadas_fallidas': 0,
+        'fecha_registro': FieldValue.serverTimestamp(),
+      });
+
+      print('Base de datos creada para el usuario $uid');
+
+      // Cambiamos de pantalla
+      if (!mounted) return;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const LoginScreen()),
+      );
+    } on FirebaseAuthException catch (e) {
+      String message;
+      if (e.code == 'weak-password') {
+        message = 'La contraseña es demasiado débil.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'Ya existe una cuenta con este correo electrónico.';
+      } else if (e.code == 'invalid-email') {
+        message = 'El formato del correo electrónico no es válido.';
+      } else {
+        message = 'Error al registrar: ${e.message}';
+      }
+      setState(() {
+        _errorMessage = message;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Ocurrió un error inesperado.';
+      });
+      print('Error general: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -93,13 +153,22 @@ class RegisterState extends State<RegisterContenido> {
                     padding: EdgeInsetsGeometry.only(left: 10, right: 10),
                     child: _crearPassword(),
                   ),
+                  // Mostrar el mensaje de error en caso de que haya uno
+                  if (_errorMessage != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text(
+                        _errorMessage!,
+                        style: GoogleFonts.pirataOne(
+                          color: Colors.red,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const LoginScreen()),
-                      );
-                    },
+                    onPressed: _registerUser,
                     style: ElevatedButton.styleFrom(
                       minimumSize: Size(375, 50),
                       shadowColor: const Color.fromARGB(255, 43, 38, 0),

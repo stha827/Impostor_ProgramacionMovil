@@ -59,4 +59,5 @@ class DefaultFirebaseOptions {
     projectId: 'impostor-proyecto',
     storageBucket: 'impostor-proyecto.firebasestorage.app',
   );
+
 }
