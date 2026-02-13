@@ -34,27 +34,23 @@ class FinalState extends State<FinalContenido> {
       children: [
         SizedBox(
           height: 650,
-          child: GridView.count(
-            crossAxisCount: 2,
-            children: [
-              Padding(
-                padding: EdgeInsetsGeometry.all(10),
-                child: Container(
-                  color: const Color.fromARGB(255, 168, 153, 181),
-                  child: Center(
-                    child: Text(
-                      'El impostor era...',
-                      style: GoogleFonts.pirataOne(
-                        fontSize: 20,
-                        color: const Color.fromARGB(255, 217, 226, 232),
-                      ),
-                    ),
+          child: Padding(
+            padding: EdgeInsetsGeometry.all(50),
+            child: Container(
+              color: const Color.fromARGB(255, 217, 226, 232),
+              child: Center(
+                child: Text(
+                  'El impostor era...',
+                  style: GoogleFonts.pirataOne(
+                    fontSize: 20,
+                    color: const Color.fromARGB(255, 168, 153, 181),
                   ),
                 ),
               ),
-            ],
+            ),
           ),
         ),
+
         SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {

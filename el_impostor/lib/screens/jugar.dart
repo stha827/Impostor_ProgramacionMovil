@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:el_impostor/screens/final.dart';
 import 'package:el_impostor/screens/flipCard.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,14 @@ class JugarContenido extends StatefulWidget {
 
 //Cuerpo
 class JugarState extends State<JugarContenido> {
+  late int numeroAleatorio;
+
+  @override
+  void initState() {
+    super.initState();
+    numeroAleatorio = Random().nextInt(jugadores);
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -39,24 +49,13 @@ class JugarState extends State<JugarContenido> {
             children: [
               for (var i = 0; i < nombresJugadores.length; i++)
                 Padding(
-                  padding: EdgeInsetsGeometry.all(7),
-                  child: FlipCardWidget(nombreJugador: nombresJugadores[i]),
+                  padding: EdgeInsets.all(7),
+                  child: FlipCardWidget(
+                    nombreJugador: nombresJugadores[i],
+                    // AQUÍ PASAMOS LA LÓGICA:
+                    diferente: (i == numeroAleatorio),
+                  ),
                 ),
-              // Padding(
-              //   padding: EdgeInsetsGeometry.all(10),
-              //   child: Container(
-              //     color: const Color.fromARGB(255, 168, 153, 181),
-              //     child: Center(
-              //       child: Text(
-              //         'Jugador número ${i + 1}',
-              //         style: GoogleFonts.pirataOne(
-              //           fontSize: 20,
-              //           color: const Color.fromARGB(255, 217, 226, 232),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

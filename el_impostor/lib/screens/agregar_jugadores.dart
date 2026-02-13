@@ -2,6 +2,7 @@ import 'package:el_impostor/screens/jugar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:el_impostor/screens/globals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Pantalla de inicio con el Drawer
 class Jugadores extends StatelessWidget {
@@ -28,6 +29,13 @@ class JugadoresContenido extends StatefulWidget {
 
 //Cuerpo
 class JugadoresState extends State<JugadoresContenido> {
+  // Indicamos la función base al ejecutar
+  @override
+  void initState() {
+    super.initState();
+    cargarNombres();
+  }
+
   void agregarJugadores() {
     setState(() {
       jugadores++;
@@ -39,9 +47,30 @@ class JugadoresState extends State<JugadoresContenido> {
     setState(() {
       if (jugadores > 3) {
         jugadores--;
-        nombresJugadores.remove("");
+        if (nombresJugadores.length != jugadores) {
+          nombresJugadores.removeLast();
+        }
       } else {
         jugadores == 3;
+      }
+    });
+  }
+
+  // Función para GUARDAR los nombres en el almacenamiento local
+  Future<void> guardarNombres() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    for (var i = 0; i < nombresJugadores.length; i++) {
+      await prefs.setString('jugador_$i', nombresJugadores[i]);
+    }
+  }
+
+  // Función para CARGAR los nombres al iniciar la app
+  Future<void> cargarNombres() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      for (var i = 0; i < jugadores; i++) {
+        nombresJugadores[i] =
+            prefs.getString('jugador_$i') ?? "Jugador ${i + 1}";
       }
     });
   }
@@ -114,18 +143,19 @@ class JugadoresState extends State<JugadoresContenido> {
                     color: const Color.fromARGB(255, 217, 226, 232),
                     child: Center(
                       child: TextFormField(
-                        initialValue: "Jugador ${i + 1}",
                         style: GoogleFonts.pirataOne(
                           fontSize: 20,
                           color: const Color.fromARGB(255, 168, 153, 181),
                         ),
+                        initialValue: nombresJugadores[i],
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: 'Añade un nombre',
                           border: InputBorder.none,
                         ),
-                        onChanged: (nuevoTexto) {
-                          nombresJugadores[i] = nuevoTexto;
+                        onChanged: (nombre) {
+                          nombresJugadores[i] = nombre;
+                          guardarNombres();
                         },
                       ),
                     ),

@@ -3,9 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
+// CLASE SACADA DE VIDEOTUTORIAL DE YOUTUBE --> https://youtu.be/OjqWQrqTfWY?si=uUc5DfgXJw11D4FW
 class FlipCardWidget extends StatefulWidget {
   final String nombreJugador;
-  const FlipCardWidget({super.key, required this.nombreJugador});
+  final bool diferente;
+  const FlipCardWidget({
+    super.key,
+    required this.nombreJugador,
+    required this.diferente,
+  });
   @override
   State<FlipCardWidget> createState() => _FlipCardWidgetState();
 }
@@ -63,7 +69,9 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
                     : Transform.scale(
                         scaleX: -1,
                         scaleY: 1,
-                        child: _buildBackCard(),
+                        child: widget.diferente
+                            ? _buildBackCardImpostor()
+                            : _buildBackCard(),
                       ),
               );
             },
@@ -103,6 +111,24 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       alignment: Alignment.center,
       child: Text(
         'Salvado\nPalabra: a',
+        style: GoogleFonts.pirataOne(
+          fontSize: 23,
+          color: const Color.fromARGB(255, 168, 153, 181),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBackCardImpostor() {
+    return Container(
+      width: 200,
+      height: 300,
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 217, 226, 232),
+      ),
+      alignment: Alignment.center,
+      child: Text(
+        'Eres el impostor',
         style: GoogleFonts.pirataOne(
           fontSize: 23,
           color: const Color.fromARGB(255, 168, 153, 181),
