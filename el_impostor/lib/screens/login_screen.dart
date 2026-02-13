@@ -44,7 +44,6 @@ class ContenidoState extends State<LoginContenido> {
   String? _errorMessage;
   bool _isLoading = false;
 
-  @override
   void _login() {
     Navigator.push(
       context,

@@ -28,6 +28,7 @@ class FinalContenido extends StatefulWidget {
 
 //Cuerpo
 class FinalState extends State<FinalContenido> {
+  String impostor = nombresJugadores[numeroAleatorio];
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -40,9 +41,10 @@ class FinalState extends State<FinalContenido> {
               color: const Color.fromARGB(255, 217, 226, 232),
               child: Center(
                 child: Text(
-                  'El impostor era...',
+                  textAlign: TextAlign.center,
+                  'El impostor era... \n$impostor',
                   style: GoogleFonts.pirataOne(
-                    fontSize: 20,
+                    fontSize: 30,
                     color: const Color.fromARGB(255, 168, 153, 181),
                   ),
                 ),

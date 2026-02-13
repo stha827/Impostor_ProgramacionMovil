@@ -30,7 +30,6 @@ class JugarContenido extends StatefulWidget {
 
 //Cuerpo
 class JugarState extends State<JugarContenido> {
-  late int numeroAleatorio;
 
   @override
   void initState() {
@@ -52,7 +51,6 @@ class JugarState extends State<JugarContenido> {
                   padding: EdgeInsets.all(7),
                   child: FlipCardWidget(
                     nombreJugador: nombresJugadores[i],
-                    // AQUÍ PASAMOS LA LÓGICA:
                     diferente: (i == numeroAleatorio),
                   ),
                 ),
