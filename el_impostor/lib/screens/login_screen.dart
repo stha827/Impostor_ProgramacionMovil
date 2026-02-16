@@ -1,11 +1,10 @@
-// ignore_for_file: unused_field
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:el_impostor/screens/agregar_jugadores.dart';
 import 'package:el_impostor/screens/register.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// Pantalla de inicio con el Drawer
+// Clase con la Pantalla de Inicio de sesión
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
   @override
@@ -39,27 +38,22 @@ class LoginContenido extends StatefulWidget {
 
 //Cuerpo
 class ContenidoState extends State<LoginContenido> {
+  //Variables
   String _correo = '';
   String _password = '';
   String? _errorMessage;
   bool _isLoading = false;
 
-  void _login() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const Jugadores()),
-    );
-  }
-
-  // Función para Iniciar Sesión
+  // Función para Iniciar Sesión conectada con Firebase
   Future<void> _loginUser() async {
+    //Campos vacíos
     if (_correo.isEmpty || _password.isEmpty) {
       setState(() {
         _errorMessage = "Por favor, llena todos los campos";
       });
       return;
     }
-
+    //Añadimos el estado del botón de inicio de sesión
     setState(() {
       _isLoading = true;
       _errorMessage = null;
@@ -104,6 +98,7 @@ class ContenidoState extends State<LoginContenido> {
     }
   }
 
+  //Cuerpo
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -174,7 +169,7 @@ class ContenidoState extends State<LoginContenido> {
                           color: Color.fromARGB(255, 241, 230, 211),
                         )
                       : ElevatedButton(
-                          onPressed: _login,
+                          onPressed: _loginUser,
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(375, 50),
                             shadowColor: const Color.fromARGB(
@@ -240,6 +235,7 @@ class ContenidoState extends State<LoginContenido> {
     );
   }
 
+  //Widget del campo para escribir un correo
   Widget _crearEmail() {
     return TextField(
       onChanged: (valor) => setState(() {
@@ -282,6 +278,7 @@ class ContenidoState extends State<LoginContenido> {
     );
   }
 
+  //Widget del campo para escribir una contraseña
   Widget _crearPassword() {
     return TextField(
       onChanged: (valor) => setState(() {

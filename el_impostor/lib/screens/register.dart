@@ -1,11 +1,9 @@
-// ignore_for_file: unused_field
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:el_impostor/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// Pantalla de inicio con el Drawer
+// Clase con la Pantalla de Registro
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
   @override
@@ -39,8 +37,7 @@ class RegisterContenido extends StatefulWidget {
 
 //Cuerpo
 class RegisterState extends State<RegisterContenido> {
-  // ignore: prefer_final_fields
-  String _nombre = '';
+  //Variables
   String _correo = '';
   String _password = '';
   String? _errorMessage;
@@ -59,21 +56,7 @@ class RegisterState extends State<RegisterContenido> {
             password: _password,
           );
 
-      print('Usuario Auth creado: ${userCredential.user?.email}');
-
-      // Obtenemos el ID
-      String uid = userCredential.user!.uid;
-
-      // Creamos un documento
-      await FirebaseFirestore.instance.collection('jugadores').doc(uid).set({
-        'email': _correo.trim(),
-        'nombre': _nombre,
-        'escapadas_exitosas': 0,
-        'escapadas_fallidas': 0,
-        'fecha_registro': FieldValue.serverTimestamp(),
-      });
-
-      print('Base de datos creada para el usuario $uid');
+      print('Usuario creado: ${userCredential.user?.email}');
 
       // Cambiamos de pantalla
       if (!mounted) return;
@@ -82,24 +65,24 @@ class RegisterState extends State<RegisterContenido> {
         MaterialPageRoute(builder: (_) => const LoginScreen()),
       );
     } on FirebaseAuthException catch (e) {
-      String message;
+      //Errores
+      String mensajeError;
       if (e.code == 'weak-password') {
-        message = 'La contraseña es demasiado débil.';
+        mensajeError = 'La contraseña es demasiado débil.';
       } else if (e.code == 'email-already-in-use') {
-        message = 'Ya existe una cuenta con este correo electrónico.';
+        mensajeError = 'Ya existe una cuenta con este correo electrónico.';
       } else if (e.code == 'invalid-email') {
-        message = 'El formato del correo electrónico no es válido.';
+        mensajeError = 'El formato del correo electrónico es inválido.';
       } else {
-        message = 'Error al registrar: ${e.message}';
+        mensajeError = 'Error al registrar';
       }
       setState(() {
-        _errorMessage = message;
+        _errorMessage = mensajeError;
       });
     } catch (e) {
       setState(() {
         _errorMessage = 'Ocurrió un error inesperado.';
       });
-      print('Error general: $e');
     }
   }
 
@@ -110,11 +93,7 @@ class RegisterState extends State<RegisterContenido> {
       children: [
         Column(
           children: [
-            Image.asset(
-              "assets/registro/logoBasico.png",
-              // height: MediaQuery.of(context).size.height * 0.2,
-              // width: MediaQuery.of(context).size.width * 0.2,
-            ),
+            Image.asset("assets/registro/logoBasico.png"),
             SizedBox(height: 10),
             Text(
               "Empieza tu camino...",
@@ -130,6 +109,7 @@ class RegisterState extends State<RegisterContenido> {
               child: Column(
                 children: [
                   SizedBox(height: 30),
+                  //Campos del correo
                   Text(
                     "Introduce tu correo",
                     style: GoogleFonts.pirataOne(
@@ -142,6 +122,7 @@ class RegisterState extends State<RegisterContenido> {
                     child: _crearEmail(),
                   ),
                   SizedBox(height: 10),
+                  //Campos de la contraseña
                   Text(
                     "Introduce tu contraseña",
                     style: GoogleFonts.pirataOne(
@@ -167,6 +148,7 @@ class RegisterState extends State<RegisterContenido> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+                  //Botón de registro
                   ElevatedButton(
                     onPressed: _registerUser,
                     style: ElevatedButton.styleFrom(
@@ -186,6 +168,31 @@ class RegisterState extends State<RegisterContenido> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 10),
+                  //Botón para volver
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const LoginScreen()),
+                      );
+                      ();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: Size(375, 50),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero,
+                      ),
+                    ),
+                    child: Text(
+                      "Volver",
+                      style: GoogleFonts.pirataOne(
+                        fontSize: 20,
+                        color: const Color.fromARGB(255, 0, 0, 0),
+                      ),
+                    ),
+                  ),
                   SizedBox(height: 40),
                 ],
               ),
@@ -196,6 +203,7 @@ class RegisterState extends State<RegisterContenido> {
     );
   }
 
+  //Widget del campo para escribir una correo
   Widget _crearEmail() {
     return TextField(
       onChanged: (valor) => setState(() {
@@ -252,6 +260,7 @@ class RegisterState extends State<RegisterContenido> {
     );
   }
 
+  //Widget del campo para escribir una contraseña
   Widget _crearPassword() {
     return TextField(
       onChanged: (valor) => setState(() {

@@ -2,9 +2,9 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:el_impostor/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
+//Clase para nuestro Splash
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-  // Creamos una pantalla que muestra imágenes repetidas en filas y columnas de forma responsive
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -21,6 +21,7 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
+//Cuerpo
 class Home extends StatelessWidget {
   const Home({super.key});
   @override

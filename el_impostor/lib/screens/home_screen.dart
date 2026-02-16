@@ -1,7 +1,7 @@
 import 'package:el_impostor/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
-// Pantalla de inicio con el Drawer
+// Pantalla de inicio
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 

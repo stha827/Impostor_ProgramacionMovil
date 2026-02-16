@@ -1,10 +1,9 @@
 import 'package:el_impostor/screens/agregar_jugadores.dart';
-import 'package:el_impostor/screens/flipCard.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:el_impostor/screens/globals.dart';
 
-// Pantalla de inicio con el Drawer
+// Clase con la pantalla final
 class Final extends StatelessWidget {
   const Final({super.key});
   @override
@@ -36,7 +35,7 @@ class FinalState extends State<FinalContenido> {
         SizedBox(
           height: 650,
           child: Padding(
-            padding: EdgeInsetsGeometry.all(50),
+            padding: const EdgeInsets.all(50),
             child: Container(
               color: const Color.fromARGB(255, 217, 226, 232),
               child: Center(
@@ -52,8 +51,8 @@ class FinalState extends State<FinalContenido> {
             ),
           ),
         ),
-
-        SizedBox(height: 20),
+        SizedBox(height: 10),
+        // Botón para volver a jugar
         ElevatedButton(
           onPressed: () {
             Navigator.push(
@@ -63,7 +62,7 @@ class FinalState extends State<FinalContenido> {
             ();
           },
           style: ElevatedButton.styleFrom(
-            minimumSize: Size(100, 50),
+            minimumSize: Size(100, 65),
             shadowColor: const Color.fromARGB(255, 0, 0, 0),
             elevation: 5,
             backgroundColor: const Color.fromARGB(255, 0, 0, 0),

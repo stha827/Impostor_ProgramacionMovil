@@ -1,16 +1,18 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
 
 // CLASE SACADA DE VIDEOTUTORIAL DE YOUTUBE --> https://youtu.be/OjqWQrqTfWY?si=uUc5DfgXJw11D4FW
+// Clase encargada de que nuestra tarjeta se pueda girar
 class FlipCardWidget extends StatefulWidget {
+  //Parámetros obligatorios
   final String nombreJugador;
   final bool diferente;
+  final String palabra;
   const FlipCardWidget({
     super.key,
     required this.nombreJugador,
     required this.diferente,
+    required this.palabra,
   });
   @override
   State<FlipCardWidget> createState() => _FlipCardWidgetState();
@@ -24,6 +26,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
 
   @override
   void initState() {
+    // Función nada más inicializar
     super.initState();
     _controller = AnimationController(
       duration: const Duration(milliseconds: 300),
@@ -35,6 +38,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
   }
 
+  //Función que comprueba que tarjeta mostrar al girar
   void _toggleCard() {
     if (_isFront) {
       _controller.forward();
@@ -52,6 +56,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     super.dispose();
   }
 
+  //Cuerpo de la tarjeta, indica la animación a realizar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,6 +74,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
                     : Transform.scale(
                         scaleX: -1,
                         scaleY: 1,
+                        //En caso de que ese jugador sea el impostor, la tarjeta trasera va a ser distinta
                         child: widget.diferente
                             ? _buildBackCardImpostor()
                             : _buildBackCard(),
@@ -81,6 +87,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     );
   }
 
+  // Parte frontal de la tarjeta
   Widget _buildFrontCard() {
     return Container(
       width: 200,
@@ -101,7 +108,9 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     );
   }
 
+  //Parte trasera normal de la tarjeta
   Widget _buildBackCard() {
+    String palabra = widget.palabra;
     return Container(
       width: 200,
       height: 300,
@@ -110,7 +119,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
       ),
       alignment: Alignment.center,
       child: Text(
-        'Salvado\nPalabra: a',
+        'Salvado\nPalabra: $palabra',
         style: GoogleFonts.pirataOne(
           fontSize: 23,
           color: const Color.fromARGB(255, 168, 153, 181),
@@ -119,6 +128,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
     );
   }
 
+  //Parte trasera de la tarjeta si somos impostor
   Widget _buildBackCardImpostor() {
     return Container(
       width: 200,
